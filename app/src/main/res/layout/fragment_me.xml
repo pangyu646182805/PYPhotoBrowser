@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
+
+    <com.neurotech.basecore.ui.widget.TitleBar
+        android:id="@id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tb_title="个人信息"
+        app:theme="@style/AppTheme.AppBarOverlay"/>
+
+    <com.neurotech.basecore.ui.widget.NoPaddingTextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y60"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/x32"
+        android:text="基本信息"
+        android:textColor="@color/colorGray999"/>
+
+    <com.neurotech.basecore.ui.widget.SettingItemWidget
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y88"
+        android:background="@color/backgroundPanel"
+        app:setting_item_right_icon="@mipmap/ic_launcher"
+        app:setting_item_right_icon_height="@dimen/x48"
+        app:setting_item_right_icon_show_circle="true"
+        app:setting_item_right_icon_width="@dimen/x48"
+        app:setting_item_text="头像"/>
+
+    <View
+        style="@style/HorizontalSplit"
+        android:layout_marginLeft="@dimen/x32"
+        android:layout_marginRight="@dimen/x32"/>
+
+    <com.neurotech.basecore.ui.widget.SettingItemWidget
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y88"
+        android:background="@color/backgroundPanel"
+        app:setting_item_content="ID:100000161"
+        app:setting_item_text="ID"/>
+
+    <View
+        style="@style/HorizontalSplit"
+        android:layout_marginLeft="@dimen/x32"
+        android:layout_marginRight="@dimen/x32"/>
+
+    <com.neurotech.basecore.ui.widget.SettingItemWidget
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y88"
+        android:background="@color/backgroundPanel"
+        app:setting_item_content="庞瑜"
+        app:setting_item_text="名字"/>
+
+    <View
+        style="@style/HorizontalSplit"
+        android:layout_marginLeft="@dimen/x32"
+        android:layout_marginRight="@dimen/x32"/>
+
+    <com.neurotech.basecore.ui.widget.SettingItemWidget
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y88"
+        android:background="@color/backgroundPanel"
+        app:setting_item_content="男"
+        app:setting_item_text="性别"/>
+
+    <View
+        style="@style/HorizontalSplit"
+        android:layout_marginLeft="@dimen/x32"
+        android:layout_marginRight="@dimen/x32"/>
+
+    <com.neurotech.basecore.ui.widget.SettingItemWidget
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y88"
+        android:background="@color/backgroundPanel"
+        app:setting_item_content="1993-10-16"
+        app:setting_item_text="出生日期"/>
+
+    <View
+        style="@style/HorizontalSplit"
+        android:layout_marginLeft="@dimen/x32"
+        android:layout_marginRight="@dimen/x32"/>
+
+    <com.neurotech.basecore.ui.widget.SettingItemWidget
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y88"
+        android:background="@color/backgroundPanel"
+        app:setting_item_content="18357144795"
+        app:setting_item_text="手机号"/>
+
+    <View
+        style="@style/HorizontalSplit"
+        android:layout_marginLeft="@dimen/x32"
+        android:layout_marginRight="@dimen/x32"/>
+
+    <com.neurotech.basecore.ui.widget.SettingItemWidget
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y88"
+        android:background="@color/backgroundPanel"
+        app:setting_item_content="Android"
+        app:setting_item_text="职业"/>
+</LinearLayout>

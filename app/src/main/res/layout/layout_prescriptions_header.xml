@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y124"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/x32"
+    android:paddingRight="@dimen/x32"
+    tools:background="@color/backgroundPanel">
+
+    <ImageView
+        android:layout_width="@dimen/x64"
+        android:layout_height="@dimen/y64"
+        app:srcCompat="@drawable/ic_yaodan"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x24"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.neurotech.basecore.ui.widget.NoPaddingTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="药单编号"
+            android:textColor="@color/colorGray999"
+            android:textSize="10sp"/>
+
+        <com.neurotech.basecore.ui.widget.NoPaddingTextView
+            android:id="@+id/tv_prescriptions_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y12"
+            android:textColor="@color/colorGray666"
+            android:textSize="16sp"
+            tools:text="201708020914"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.neurotech.basecore.ui.widget.NoPaddingTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服药周期"
+            android:textColor="@color/colorGray999"
+            android:textSize="10sp"/>
+
+        <com.neurotech.basecore.ui.widget.NoPaddingTextView
+            android:id="@+id/tv_prescriptions_cycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y12"
+            android:textColor="@color/colorGray666"
+            android:textSize="10sp"
+            tools:text="8月2日-9月7日"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TitleBar">
+        <attr name="center_layout" format="reference"/>
+        <attr name="tb_compose_layout" format="reference"/>
+        <attr name="tb_title" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="SettingItemWidget">
+        <attr name="setting_item_left_icon" format="reference"/>
+        <attr name="setting_item_right_icon" format="reference"/>
+        <attr name="setting_item_right_icon_show_circle" format="boolean"/>
+        <attr name="setting_item_right_icon_width" format="dimension"/>
+        <attr name="setting_item_right_icon_height" format="dimension"/>
+        <attr name="setting_item_text" format="string"/>
+        <attr name="setting_item_sub_title" format="string"/>
+        <attr name="setting_item_text_color" format="color"/>
+        <attr name="setting_item_text_size" format="dimension"/>
+        <attr name="setting_item_sub_text_color" format="color"/>
+        <attr name="setting_item_sub_text_size" format="dimension"/>
+        <attr name="setting_item_content" format="string"/>
+        <attr name="setting_item_content_text_color" format="color"/>
+        <attr name="setting_item_content_text_size" format="dimension"/>
+        <attr name="setting_item_icon_visibility" format="boolean"/>
+        <attr name="setting_item_arrow_visibility" format="boolean"/>
+        <attr name="setting_item_display" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="ProgressWheel">
+        <attr name="matProg_progressIndeterminate" format="boolean"/>
+        <attr name="matProg_barColor" format="color"/>
+        <attr name="matProg_rimColor" format="color"/>
+        <attr name="matProg_rimWidth" format="dimension"/>
+        <attr name="matProg_spinSpeed" format="float"/>
+        <attr name="matProg_barSpinCycleTime" format="integer"/>
+        <attr name="matProg_circleRadius" format="dimension"/>
+        <attr name="matProg_fillRadius" format="boolean"/>
+        <attr name="matProg_barWidth" format="dimension"/>
+        <attr name="matProg_linearProgress" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="MultipleStatusLayout">
+        <attr name="msv_img_res" format="reference"/>
+        <attr name="msv_status">
+            <enum name="hide" value="0"/>
+            <enum name="loading" value="1"/>
+            <enum name="error" value="2"/>
+        </attr>
+        <attr name="msv_img_width" format="dimension"/>
+        <attr name="msv_img_height" format="dimension"/>
+        <attr name="msv_error_text" format="string"/>
+        <attr name="msv_reload_text" format="string"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/y96"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y8"
+            android:background="@drawable/actionbar_shadow_up"/>
+
+        <com.neurotech.tablayout.CommonTabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y96"
+            android:background="@color/backgroundPanel"
+            app:tl_iconHeight="@dimen/x40"
+            app:tl_iconWidth="@dimen/y40"
+            app:tl_indicator_height="0dp"
+            app:tl_textSelectColor="@color/colorPrimary"
+            app:tl_textUnselectColor="#b2b2b2"
+            app:tl_textsize="11sp"
+            app:tl_underline_color="#DDDDDD"
+            app:tl_underline_height="@dimen/x2"/>
+    </LinearLayout>
+</FrameLayout>

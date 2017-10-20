@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y60"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/x32"
+    android:paddingRight="@dimen/x32">
+
+    <com.neurotech.basecore.ui.widget.NoPaddingTextView
+        android:layout_width="@dimen/x280"
+        android:layout_height="wrap_content"
+        android:text="药品名称"
+        android:textColor="@color/colorPrimary"
+        android:textSize="10sp"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x16"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <com.neurotech.basecore.ui.widget.NoPaddingTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/x16"
+            android:text="早"
+            android:textColor="@color/colorPrimary"
+            android:textSize="10sp"/>
+
+        <com.neurotech.basecore.ui.widget.NoPaddingTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/x16"
+            android:text="中"
+            android:textColor="@color/colorPrimary"
+            android:textSize="10sp"/>
+
+        <com.neurotech.basecore.ui.widget.NoPaddingTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/x16"
+            android:text="晚"
+            android:textColor="@color/colorPrimary"
+            android:textSize="10sp"/>
+    </LinearLayout>
+</LinearLayout>

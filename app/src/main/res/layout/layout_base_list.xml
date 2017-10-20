@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.neurotech.basecore.ui.widget.TitleBar
+        android:id="@id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tb_title="药单管理"
+        app:theme="@style/AppTheme.AppBarOverlay"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <com.neurotech.basecore.ui.widget.MultipleStatusLayout
+            android:id="@id/status_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:msv_error_text="数据加载错误"
+            app:msv_img_res="@mipmap/ic_launcher"
+            app:msv_reload_text="重新加载"
+            app:msv_status="hide"/>
+    </FrameLayout>
+</LinearLayout>

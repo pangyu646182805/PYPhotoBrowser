@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tb_center_layout" type="id"/>
+    <item name="tb_compose_layout" type="id"/>
+    <item name="status_layout" type="id"/>
+    <item name="title_bar" type="id"/>
+    <!-- BaseDialog -->
+    <!-- dialog的标题 -->
+    <item name="tv_title" type="id"/>
+    <!-- dialog left 按钮 -->
+    <item name="btn_left" type="id"/>
+    <!-- dialog right 按钮 -->
+    <item name="btn_right" type="id"/>
+</resources>
