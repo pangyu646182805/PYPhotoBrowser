@@ -1,4 +1,4 @@
-package com.neurotech.basecore.ui.module.test;
+package com.neurotech.basecore.module.test;
 
 import com.neurotech.basecore.R;
 import com.neurotech.basecore.base.SupportActivity;

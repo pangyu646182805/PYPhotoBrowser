@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import com.neurotech.basecore.bean.AlbumBean;
 import com.neurotech.basecore.bean.AlbumCategoryBean;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -59,7 +58,6 @@ public class PhotoLoader {
         albumBean.setMimeType(cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.MIME_TYPE)));
         albumBean.setWidth(cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns.WIDTH)));
         albumBean.setHeight(cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns.HEIGHT)));
-        albumBean.setFile(new File(albumBean.getPath()));
         albumBean.setDateTaken(cursor.getLong(
                 cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATE_TAKEN)));
         albumBean.setDateAdded(cursor.getLong(

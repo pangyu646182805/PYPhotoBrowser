@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 
 import com.neurotech.basecore.bean.AlbumBean;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -47,7 +46,6 @@ public class VideoLoader {
         albumBean.setMimeType(cursor.getString(cursor.getColumnIndex(MediaStore.Video.VideoColumns.MIME_TYPE)));
         albumBean.setWidth(cursor.getInt(cursor.getColumnIndex(MediaStore.Video.VideoColumns.WIDTH)));
         albumBean.setHeight(cursor.getInt(cursor.getColumnIndex(MediaStore.Video.VideoColumns.HEIGHT)));
-        albumBean.setFile(new File(albumBean.getPath()));
         albumBean.setDateTaken(cursor.getLong(
                 cursor.getColumnIndex(MediaStore.Video.VideoColumns.DATE_TAKEN)));
         albumBean.setDateAdded(cursor.getLong(

@@ -2,20 +2,19 @@ package com.neurotech.basecore.bean;
 
 import android.text.format.Formatter;
 
+import com.neurotech.basecore.ui.adapter.base.ISelect;
 import com.neurotech.basecore.utils.TimeUtils;
 import com.neurotech.basecore.utils.UIUtils;
-
-import java.io.File;
 
 /**
  * Created by Administrator on 2017/10/21.
  */
 
-public class AlbumBean {
+public class AlbumBean implements ISelect {
     public static final int TYPE_PHOTO = 0;
     public static final int TYPE_VIDEO = 1;
 
-    private int id;
+    private int id = -1;
     private String title;  // 文件名称
     private String path;  // 文件路径
     private long size;  // 文件大小
@@ -26,7 +25,6 @@ public class AlbumBean {
     private String mimeType;  // mime类型 image/jpeg
     private int width;  // 尺寸信息
     private int height;  // 尺寸信息
-    private File file;
 
     public int getId() {
         return id;
@@ -116,14 +114,6 @@ public class AlbumBean {
         this.height = height;
     }
 
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
     @Override
     public String toString() {
         return "id --> " + id + "\n" +
@@ -150,5 +140,17 @@ public class AlbumBean {
                 size == albumBean.size &&
                 dateAdded == albumBean.dateAdded &&
                 dateModified == albumBean.dateModified;
+    }
+
+    private boolean isSelected;
+
+    @Override
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

@@ -1,4 +1,4 @@
-package com.neurotech.basecore.ui.module.test;
+package com.neurotech.basecore.module.test;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;

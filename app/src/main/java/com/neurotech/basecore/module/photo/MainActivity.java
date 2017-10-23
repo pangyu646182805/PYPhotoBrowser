@@ -1,4 +1,4 @@
-package com.neurotech.basecore.ui.module.photo;
+package com.neurotech.basecore.module.photo;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -7,7 +7,7 @@ import com.neurotech.basecore.R;
 import com.neurotech.basecore.base.SupportActivity;
 import com.neurotech.basecore.permission.DangerousPermissions;
 import com.neurotech.basecore.permission.PermissionsHelper;
-import com.neurotech.basecore.ui.module.test.TestFragment;
+import com.neurotech.basecore.module.test.TestFragment;
 import com.neurotech.basecore.utils.ToastUtils;
 
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;

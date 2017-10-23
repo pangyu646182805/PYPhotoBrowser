@@ -1,6 +1,7 @@
 package com.neurotech.basecore.base;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -53,6 +54,8 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
             if (supportDarkStatusBar()) {
                 SystemBarHelper.setStatusBarDarkMode(this);
             }
+        } else {
+            SystemBarHelper.tintStatusBar(this, Color.BLACK);
         }
         initPresenter();
         if (mTitleBar != null) {
