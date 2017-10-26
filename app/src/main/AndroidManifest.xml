@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.neurotech.basecore">
+          package="com.neurotech.photobrowser">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -8,21 +8,21 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".base.BaseApplication"
+        android:name="com.neurotech.photobrowser.base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".module.test.TestActivity"
+            android:name="com.neurotech.photobrowser.module.test.TestActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".module.photo.MainActivity"
+            android:name="com.neurotech.photobrowser.module.photo.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

@@ -8,7 +8,7 @@
     android:background="@color/backgroundColor"
     android:orientation="vertical">
 
-    <com.neurotech.basecore.ui.widget.NoPaddingTextView
+    <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/y40"
@@ -81,7 +81,7 @@
                         android:layout_height="@dimen/y28"
                         app:srcCompat="@drawable/ic_liaoxiaochakan"/>
 
-                    <com.neurotech.basecore.ui.widget.NoPaddingTextView
+                    <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/x8"
@@ -111,7 +111,7 @@
                         android:layout_height="@dimen/y28"
                         app:srcCompat="@drawable/ic_liaoxiaochakan"/>
 
-                    <com.neurotech.basecore.ui.widget.NoPaddingTextView
+                    <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/x8"
