@@ -23,7 +23,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/transparent</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
@@ -54,8 +54,8 @@
     </style>
 
     <style name="NormalDialogAnim" parent="android:Animation">
-        <item name="@android:windowEnterAnimation">@anim/normal_dialog_enter</item>
-        <item name="@android:windowExitAnimation">@anim/normal_dialog_exit</item>
+        <item name="android:windowEnterAnimation">@anim/normal_dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/normal_dialog_exit</item>
     </style>
 
     <style name="FromBottomDialogAnim" parent="android:Animation">

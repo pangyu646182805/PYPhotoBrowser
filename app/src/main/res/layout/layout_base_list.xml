@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.neurotech.photobrowser.ui.widget.TitleBar
+    <com.neurotech.photobrowser.widget.TitleBar
         android:id="@id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                 android:overScrollMode="never"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-        <com.neurotech.photobrowser.ui.widget.MultipleStatusLayout
+        <com.neurotech.photobrowser.widget.MultipleStatusLayout
             android:id="@id/status_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

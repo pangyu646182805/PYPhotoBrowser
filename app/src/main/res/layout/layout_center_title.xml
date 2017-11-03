@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+<com.neurotech.photobrowser.widget.NoPaddingTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tv_center_title"

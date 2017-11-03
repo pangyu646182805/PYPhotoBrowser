@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/x32"
     android:paddingRight="@dimen/x32">
 
-    <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+    <com.neurotech.photobrowser.widget.NoPaddingTextView
         android:id="@+id/tv_drug_name"
         android:layout_width="@dimen/x280"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+        <com.neurotech.photobrowser.widget.NoPaddingTextView
             android:id="@+id/tv_morning"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:textSize="12sp"
             tools:text="15mg"/>
 
-        <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+        <com.neurotech.photobrowser.widget.NoPaddingTextView
             android:id="@+id/tv_afternoon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:textSize="12sp"
             tools:text="5mg"/>
 
-        <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+        <com.neurotech.photobrowser.widget.NoPaddingTextView
             android:id="@+id/tv_evening"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

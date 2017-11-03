@@ -11,4 +11,7 @@
     <item name="btn_left" type="id"/>
     <!-- dialog right 按钮 -->
     <item name="btn_right" type="id"/>
+
+    <item name="check" type="id"/>
+    <item name="iv_img" type="id"/>
 </resources>

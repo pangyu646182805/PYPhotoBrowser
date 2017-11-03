@@ -1,7 +1,7 @@
 package com.neurotech.photobrowser.interfaces;
 
 
-import com.neurotech.photobrowser.ui.adapter.base.BaseViewHolder;
+import com.neurotech.photobrowser.adapter.base.BaseViewHolder;
 
 /**
  * Created by NeuroAndroid on 2017/2/14.

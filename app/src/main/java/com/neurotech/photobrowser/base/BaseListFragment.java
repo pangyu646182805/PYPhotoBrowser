@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
 import com.neurotech.photobrowser.R;
-import com.neurotech.photobrowser.ui.adapter.base.BaseRvAdapter;
+import com.neurotech.photobrowser.adapter.base.BaseRvAdapter;
 import com.neurotech.photobrowser.utils.L;
 import com.neurotech.photobrowser.utils.NetworkUtils;
 import com.neurotech.photobrowser.utils.ToastUtils;

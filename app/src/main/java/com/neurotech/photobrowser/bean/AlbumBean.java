@@ -2,7 +2,8 @@ package com.neurotech.photobrowser.bean;
 
 import android.text.format.Formatter;
 
-import com.neurotech.photobrowser.ui.adapter.base.ISelect;
+import com.neurotech.photobrowser.adapter.base.ISelect;
+import com.neurotech.photobrowser.utils.MimeType;
 import com.neurotech.photobrowser.utils.TimeUtils;
 import com.neurotech.photobrowser.utils.UIUtils;
 
@@ -11,9 +12,6 @@ import com.neurotech.photobrowser.utils.UIUtils;
  */
 
 public class AlbumBean implements ISelect {
-    public static final int TYPE_PHOTO = 0;
-    public static final int TYPE_VIDEO = 1;
-
     private int id = -1;
     private String title;  // 文件名称
     private String path;  // 文件路径
@@ -21,10 +19,13 @@ public class AlbumBean implements ISelect {
     private Long dateTaken;  // 文件添加时间
     private long dateAdded;  // 文件添加时间
     private long dateModified;  // 文件修改时间
-    private int classifyFlag;  // 类型 0 照片  1 视频
+    @MimeType.MediaMimeType
+    private int albumMimeType;  // 类型 0 照片  1 视频
     private String mimeType;  // mime类型 image/jpeg
     private int width;  // 尺寸信息
     private int height;  // 尺寸信息
+    private int albumId;
+    private long duration;
 
     public int getId() {
         return id;
@@ -82,12 +83,13 @@ public class AlbumBean implements ISelect {
         this.dateModified = dateModified;
     }
 
-    public int getClassifyFlag() {
-        return classifyFlag;
+    @MimeType.MediaMimeType
+    public int getAlbumMimeType() {
+        return albumMimeType;
     }
 
-    public void setClassifyFlag(int classifyFlag) {
-        this.classifyFlag = classifyFlag;
+    public void setAlbumMimeType(@MimeType.MediaMimeType int albumMimeType) {
+        this.albumMimeType = albumMimeType;
     }
 
     public String getMimeType() {
@@ -112,6 +114,22 @@ public class AlbumBean implements ISelect {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public int getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(int albumId) {
+        this.albumId = albumId;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 
     @Override

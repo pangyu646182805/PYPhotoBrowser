@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
-import com.neurotech.photobrowser.ui.adapter.base.ISelect;
+import com.neurotech.photobrowser.adapter.base.ISelect;
 
 import java.io.File;
 import java.io.Serializable;

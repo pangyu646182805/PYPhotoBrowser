@@ -26,7 +26,7 @@
             android:src="@mipmap/ic_launcher"/>
     </FrameLayout>
 
-    <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+    <com.neurotech.photobrowser.widget.NoPaddingTextView
         android:id="@+id/tv_menu_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

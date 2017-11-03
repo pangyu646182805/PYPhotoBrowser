@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 
 import com.flyco.systembar.SystemBarHelper;
 import com.neurotech.photobrowser.R;
-import com.neurotech.photobrowser.ui.widget.MultipleStatusLayout;
-import com.neurotech.photobrowser.ui.widget.TitleBar;
+import com.neurotech.photobrowser.widget.MultipleStatusLayout;
+import com.neurotech.photobrowser.widget.TitleBar;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import org.greenrobot.eventbus.EventBus;

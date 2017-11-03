@@ -10,21 +10,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.neurotech.photobrowser.R;
+import com.neurotech.photobrowser.adapter.PhotoAdapter;
 import com.neurotech.photobrowser.base.SupportFragment;
 import com.neurotech.photobrowser.bean.AlbumBean;
 import com.neurotech.photobrowser.bean.AlbumCategoryBean;
 import com.neurotech.photobrowser.config.Constants;
 import com.neurotech.photobrowser.loader.AlbumCategoryComparator;
-import com.neurotech.photobrowser.loader.AlbumComparator;
-import com.neurotech.photobrowser.loader.PhotoLoader;
-import com.neurotech.photobrowser.loader.VideoLoader;
 import com.neurotech.photobrowser.loader.WrappedAsyncTaskLoader;
-import com.neurotech.photobrowser.ui.adapter.PhotoAdapter;
 import com.neurotech.photobrowser.utils.L;
+import com.neurotech.photobrowser.utils.SpacesItemDecoration;
 import com.neurotech.photobrowser.utils.TimeUtils;
+import com.neurotech.photobrowser.utils.UIUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -65,6 +63,10 @@ public class PhotoBrowserFragment extends SupportFragment
         mRvList.setLayoutManager(mGridLayoutManager);
         mPhotoAdapter = new PhotoAdapter(mContext, null, null);
         mRvList.setAdapter(mPhotoAdapter);
+        /*mRvList.addItemDecoration(DividerUtils.defaultHorizontalDivider(mContext));
+        mRvList.addItemDecoration(DividerUtils.defaultVerticalDivider(mContext));*/
+        mRvList.addItemDecoration(new SpacesItemDecoration((int) UIUtils.getDimen(R.dimen.x2), 3));
+        mRvList.setHasFixedSize(true);
     }
 
     private int getSpanSize(int position) {
@@ -118,11 +120,11 @@ public class PhotoBrowserFragment extends SupportFragment
         public ArrayList<AlbumCategoryBean> loadInBackground() {
             long start = System.currentTimeMillis();
             ArrayList<AlbumBean> dataList = new ArrayList<>();
-            dataList.addAll(PhotoLoader.getAllPhotos(getContext()));
-            dataList.addAll(VideoLoader.getAllVideos(getContext()));
+            // dataList.addAll(PhotoLoader.getAllPhotos(getContext()));
+            // dataList.addAll(VideoLoader.getAllVideos(getContext()));
             L.e("albums size --> " + dataList.size());
             L.e("getAllAlbums time : " + (System.currentTimeMillis() - start));
-            Collections.sort(dataList, new AlbumComparator());
+            // Collections.sort(dataList, new AlbumComparator());
 
             start = System.currentTimeMillis();
             Map<Long, List<AlbumBean>> map = new TreeMap<>(new AlbumCategoryComparator());

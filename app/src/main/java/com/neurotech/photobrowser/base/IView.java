@@ -2,7 +2,7 @@ package com.neurotech.photobrowser.base;
 
 import android.content.Context;
 
-import com.neurotech.photobrowser.ui.widget.MultipleStatusLayout;
+import com.neurotech.photobrowser.widget.MultipleStatusLayout;
 
 /**
  * Created by NeuroAndroid on 2017/6/13.

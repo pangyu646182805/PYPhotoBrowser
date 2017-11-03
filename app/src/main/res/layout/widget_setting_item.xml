@@ -25,7 +25,7 @@
         android:layout_toRightOf="@+id/iv_setting_icon"
         android:orientation="vertical">
 
-        <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+        <com.neurotech.photobrowser.widget.NoPaddingTextView
             android:id="@+id/tv_setting_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:textSize="14sp"
             tools:text="text"/>
 
-        <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+        <com.neurotech.photobrowser.widget.NoPaddingTextView
             android:id="@+id/tv_sub_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/x16">
 
-            <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+            <com.neurotech.photobrowser.widget.NoPaddingTextView
                 android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

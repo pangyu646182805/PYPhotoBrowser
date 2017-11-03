@@ -23,14 +23,14 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+        <com.neurotech.photobrowser.widget.NoPaddingTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="药单编号"
             android:textColor="@color/colorGray999"
             android:textSize="10sp"/>
 
-        <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+        <com.neurotech.photobrowser.widget.NoPaddingTextView
             android:id="@+id/tv_prescriptions_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,14 +45,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+        <com.neurotech.photobrowser.widget.NoPaddingTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="服药周期"
             android:textColor="@color/colorGray999"
             android:textSize="10sp"/>
 
-        <com.neurotech.photobrowser.ui.widget.NoPaddingTextView
+        <com.neurotech.photobrowser.widget.NoPaddingTextView
             android:id="@+id/tv_prescriptions_cycle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

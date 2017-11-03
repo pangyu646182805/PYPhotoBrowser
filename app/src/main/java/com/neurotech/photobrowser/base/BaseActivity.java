@@ -10,8 +10,8 @@ import android.view.MenuItem;
 
 import com.flyco.systembar.SystemBarHelper;
 import com.neurotech.photobrowser.R;
-import com.neurotech.photobrowser.ui.widget.MultipleStatusLayout;
-import com.neurotech.photobrowser.ui.widget.TitleBar;
+import com.neurotech.photobrowser.widget.MultipleStatusLayout;
+import com.neurotech.photobrowser.widget.TitleBar;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,7 +50,8 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         if (useEventBus()) EventBus.getDefault().register(this);
         mBinder = ButterKnife.bind(this);
         if (supportImmersive()) {
-            SystemBarHelper.tintStatusBar(this, getResources().getColor(R.color.colorPrimary));
+            // SystemBarHelper.tintStatusBar(this, getResources().getColor(R.color.colorPrimary));
+            SystemBarHelper.immersiveStatusBar(this);
             if (supportDarkStatusBar()) {
                 SystemBarHelper.setStatusBarDarkMode(this);
             }

@@ -7,7 +7,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.neurotech.photobrowser.bean.AlbumBean;
+import com.neurotech.photobrowser.bean.PhotoAndVideoBean;
+import com.neurotech.photobrowser.utils.MimeType;
 
 import java.util.ArrayList;
 
@@ -17,14 +18,14 @@ import java.util.ArrayList;
 
 public class VideoLoader {
     @NonNull
-    public static ArrayList<AlbumBean> getAllVideos(@NonNull Context context) {
+    public static ArrayList<PhotoAndVideoBean> getAllVideos(@NonNull Context context) {
         Cursor cursor = makePhotoCursor(context, null, null, MediaStore.Video.Media.DEFAULT_SORT_ORDER);
         return getVideos(cursor);
     }
 
     @NonNull
-    private static ArrayList<AlbumBean> getVideos(@Nullable final Cursor cursor) {
-        ArrayList<AlbumBean> songs = new ArrayList<>();
+    private static ArrayList<PhotoAndVideoBean> getVideos(@Nullable final Cursor cursor) {
+        ArrayList<PhotoAndVideoBean> songs = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 songs.add(getVideoFromCursorImpl(cursor));
@@ -36,23 +37,23 @@ public class VideoLoader {
         return songs;
     }
 
-    private static AlbumBean getVideoFromCursorImpl(Cursor cursor) {
-        AlbumBean albumBean = new AlbumBean();
-        albumBean.setId(cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)));
-        albumBean.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Video.VideoColumns.TITLE)));
-        albumBean.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Video.VideoColumns.DATA)));
-        albumBean.setSize(cursor.getLong(cursor.getColumnIndex(MediaStore.Video.VideoColumns.SIZE)));
-        albumBean.setClassifyFlag(AlbumBean.TYPE_VIDEO);
-        albumBean.setMimeType(cursor.getString(cursor.getColumnIndex(MediaStore.Video.VideoColumns.MIME_TYPE)));
-        albumBean.setWidth(cursor.getInt(cursor.getColumnIndex(MediaStore.Video.VideoColumns.WIDTH)));
-        albumBean.setHeight(cursor.getInt(cursor.getColumnIndex(MediaStore.Video.VideoColumns.HEIGHT)));
-        albumBean.setDateTaken(cursor.getLong(
+    private static PhotoAndVideoBean getVideoFromCursorImpl(Cursor cursor) {
+        PhotoAndVideoBean videoBean = new PhotoAndVideoBean();
+        videoBean.setId(cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)));
+        videoBean.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Video.VideoColumns.TITLE)));
+        videoBean.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Video.VideoColumns.DATA)));
+        videoBean.setSize(cursor.getLong(cursor.getColumnIndex(MediaStore.Video.VideoColumns.SIZE)));
+        videoBean.setMediaMimeType(MimeType.VIDEO);
+        videoBean.setMimeType(cursor.getString(cursor.getColumnIndex(MediaStore.Video.VideoColumns.MIME_TYPE)));
+        videoBean.setWidth(cursor.getInt(cursor.getColumnIndex(MediaStore.Video.VideoColumns.WIDTH)));
+        videoBean.setHeight(cursor.getInt(cursor.getColumnIndex(MediaStore.Video.VideoColumns.HEIGHT)));
+        videoBean.setDateTaken(cursor.getLong(
                 cursor.getColumnIndex(MediaStore.Video.VideoColumns.DATE_TAKEN)));
-        albumBean.setDateAdded(cursor.getLong(
+        videoBean.setDateAdded(cursor.getLong(
                 cursor.getColumnIndex(MediaStore.Video.VideoColumns.DATE_ADDED)));
-        albumBean.setDateModified(cursor.getLong(
+        videoBean.setDateModified(cursor.getLong(
                 cursor.getColumnIndex(MediaStore.Video.VideoColumns.DATE_MODIFIED)));
-        return albumBean;
+        return videoBean;
     }
 
     @Nullable

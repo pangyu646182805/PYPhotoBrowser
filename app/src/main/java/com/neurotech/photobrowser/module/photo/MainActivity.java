@@ -5,9 +5,9 @@ import android.support.annotation.NonNull;
 
 import com.neurotech.photobrowser.R;
 import com.neurotech.photobrowser.base.SupportActivity;
+import com.neurotech.photobrowser.module.test.TestFragment;
 import com.neurotech.photobrowser.permission.DangerousPermissions;
 import com.neurotech.photobrowser.permission.PermissionsHelper;
-import com.neurotech.photobrowser.module.test.TestFragment;
 import com.neurotech.photobrowser.utils.ToastUtils;
 
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;

@@ -32,7 +32,7 @@ ext {
             "retrofit-adapter-rxjava2": "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
             "okhttp3"                 : "com.squareup.okhttp3:okhttp:3.8.0",
             "glide"                   : "com.github.bumptech.glide:glide:3.8.0",
-            "sketch"                  : "me.xiaopan:sketch:2.5.0-b2",
+            "sketch"                  : "me.xiaopan:sketch:2.5.0",
             "okgo"                    : "com.lzy.net:okgo:3.0.4",
             "okrx2"                   : "com.lzy.net:okrx2:2.0.2",
 
