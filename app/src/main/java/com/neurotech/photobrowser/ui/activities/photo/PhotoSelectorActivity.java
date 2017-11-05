@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import com.flyco.systembar.SystemBarHelper;
 import com.neurotech.photobrowser.MediaFolderSpinner;
 import com.neurotech.photobrowser.MediaLoader;
+import com.neurotech.photobrowser.PhotoGallery;
 import com.neurotech.photobrowser.R;
 import com.neurotech.photobrowser.SelectionOptions;
 import com.neurotech.photobrowser.adapter.FolderAdapter;
@@ -31,6 +33,7 @@ import com.neurotech.photobrowser.utils.UIUtils;
 import com.neurotech.photobrowser.widget.slidingpanellayout.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by NeuroAndroid on 2017/10/30.
@@ -50,6 +53,7 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
     private Toolbar mToolbar;
     private MediaAdapter mMediaAdapter;
     private MediaFolderSpinner mFolderSpinner;
+    private List<FileBean> mSelectedItems = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,9 +108,9 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
 
         // mRvList.setLayoutFrozen(true);
         mRvList.setHasFixedSize(true);
-        mRvList.setLayoutManager(new GridLayoutManager(this, 4));
-        mRvList.addItemDecoration(new SpacesItemDecoration((int) UIUtils.getDimen(R.dimen.x4), 4));
-        mMediaAdapter = new MediaAdapter(this);
+        mRvList.setLayoutManager(new GridLayoutManager(this, mOptions.gridSize));
+        mRvList.addItemDecoration(new SpacesItemDecoration((int) UIUtils.getDimen(R.dimen.x4), mOptions.gridSize));
+        mMediaAdapter = new MediaAdapter(this, mRvList);
         mRvList.setAdapter(mMediaAdapter);
 
         mSlidingUpPanelLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -154,6 +158,26 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
                 }
             }
         });
+        mMediaAdapter.setOnItemSelectedListener((viewHolder, position, isSelected, item) -> {
+            if (isSelected) {
+                mSelectedItems.add(item);
+                if (mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED) {
+                    mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                }
+            } else {
+                mSelectedItems.remove(item);
+            }
+            invalidateOptionsMenu();
+            mSlidingUpPanelLayout.setTouchEnabled(mSelectedItems.isEmpty());
+        });
+        mMediaAdapter.setOnItemClickListener((viewHolder, position, fileBean) -> {
+            L.e("position : " + position + " title : " + fileBean.getTitle());
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("item", fileBean);
+            bundle.putSerializable("images", mMediaAdapter.getImageList());
+            bundle.putInt("position", position);
+            PhotoGallery.openPhotoGallery(this, bundle);
+        });
     }
 
     private void showAppBarLayout() {
@@ -173,12 +197,19 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
     }
 
     @Override
+    protected void onPause() {
+        overridePendingTransition(0, 0);
+        super.onPause();
+    }
+
+    @Override
     public void onBackPressed() {
         L.e("panel state : " + mSlidingUpPanelLayout.getPanelState());
         if (mSlidingUpPanelLayout.getPanelState() != SlidingUpPanelLayout.PanelState.DRAGGING) {
             if (mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED ||
                     mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
                 mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+                hideAppBarLayout();
             } else {
                 L.e("onBackPressed");
                 super.onBackPressed();
@@ -198,9 +229,35 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem previewItem = menu.findItem(R.id.action_preview);
+        MenuItem doneItem = menu.findItem(R.id.action_done);
+        if (mSelectedItems.isEmpty()) {
+            previewItem.setEnabled(false);
+            doneItem.setEnabled(false);
+            doneItem.setTitle("完成");
+        } else {
+            previewItem.setEnabled(true);
+            doneItem.setEnabled(true);
+            doneItem.setTitle("完成(" + mSelectedItems.size() + "/" + mOptions.maxSelectable +")");
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

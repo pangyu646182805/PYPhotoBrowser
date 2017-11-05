@@ -6,11 +6,13 @@ import com.neurotech.photobrowser.utils.MimeType;
 import com.neurotech.photobrowser.utils.TimeUtils;
 import com.neurotech.photobrowser.utils.UIUtils;
 
+import java.io.Serializable;
+
 /**
  * Created by NeuroAndroid on 2017/11/1.
  */
 
-public class FileBean {
+public class FileBean implements Serializable {
     private int id = -1;
     private String title;  // 文件名称
     private String path;  // 文件路径
@@ -20,6 +22,16 @@ public class FileBean {
     @MimeType.MediaMimeType
     private int mediaMimeType;
     private String mimeType;  // mime类型 image/jpeg
+    private boolean isSelected;
+    private int duration;
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
     public int getId() {
         return id;
@@ -83,6 +95,14 @@ public class FileBean {
 
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     @Override

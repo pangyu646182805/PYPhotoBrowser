@@ -1,8 +1,9 @@
 package com.neurotech.photobrowser;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.ImageView;
 
+import com.neurotech.photobrowser.adapter.MediaAdapter;
 import com.neurotech.photobrowser.bean.FileBean;
 
 /**
@@ -10,7 +11,7 @@ import com.neurotech.photobrowser.bean.FileBean;
  */
 
 public interface ViewHolderCreator {
-    RecyclerView.ViewHolder createViewHolder(ViewGroup parent);
+    ImageView inflateViewStub(ViewStub viewStub);
 
-    void onBindViewHolder(RecyclerView.ViewHolder viewHolder, FileBean item);
+    void onBindViewHolder(MediaAdapter.MediaContentViewHolder viewHolder, FileBean item);
 }

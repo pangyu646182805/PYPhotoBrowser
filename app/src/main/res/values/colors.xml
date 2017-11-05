@@ -24,6 +24,9 @@
     <color name="black_6">#6000</color>
     <color name="black_3">#3000</color>
 
+    <color name="image_overlay_true">#80000000</color>
+    <color name="image_overlay_false">#20000000</color>
+
     <color name="color_picker_background">#cc2b2b2b</color>
 
     <color name="gray">#808080</color>

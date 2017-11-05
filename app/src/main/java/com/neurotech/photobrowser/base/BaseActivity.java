@@ -135,6 +135,10 @@ public abstract class BaseActivity<P extends IPresenter> extends RxAppCompatActi
         }
     }
 
+    protected TitleBar getTitleBar() {
+        return mTitleBar;
+    }
+
     protected void onActivityCreate(Bundle savedInstanceState) {
     }
 

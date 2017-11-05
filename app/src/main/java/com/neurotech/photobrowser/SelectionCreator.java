@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 
 import com.neurotech.photobrowser.ui.activities.photo.PhotoSelectorActivity;
 import com.neurotech.photobrowser.utils.MimeType;
-import com.neurotech.photobrowser.utils.SelectMode;
 
 /**
  * Created by NeuroAndroid on 2017/11/1.
@@ -22,13 +21,19 @@ public final class SelectionCreator {
         mOptions.mimeType = mimeType;
     }
 
-    /**
-     * 单选or多选模式
-     * @param selectMode {@link SelectMode}
-     * @return
-     */
-    public SelectionCreator selectMode(@SelectMode.MediaSelectMode int selectMode) {
-        mOptions.selectMode = selectMode;
+    public SelectionCreator maxSelectable(int maxSelectable) {
+        if (maxSelectable < 1) {
+            throw new IllegalArgumentException("maxSelectable must be greater than or equal to one");
+        }
+        mOptions.maxSelectable = maxSelectable;
+        return this;
+    }
+
+    public SelectionCreator gridSize(int gridSize) {
+        if (gridSize < 2) {
+            throw new IllegalArgumentException("gridSize must be greater than or equal to two");
+        }
+        mOptions.gridSize = gridSize;
         return this;
     }
 

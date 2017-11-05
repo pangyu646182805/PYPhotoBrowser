@@ -1,12 +1,11 @@
 package com.neurotech.photobrowser;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.ImageView;
 
+import com.neurotech.photobrowser.adapter.MediaAdapter;
 import com.neurotech.photobrowser.bean.FileBean;
-import com.neurotech.photobrowser.utils.UIUtils;
+import com.neurotech.photobrowser.utils.MimeType;
 
 import me.xiaopan.sketch.Sketch;
 import me.xiaopan.sketch.SketchImageView;
@@ -18,37 +17,49 @@ import me.xiaopan.sketch.display.TransitionImageDisplayer;
 
 public class SketchViewHolderCreator implements ViewHolderCreator {
     @Override
-    public RecyclerView.ViewHolder createViewHolder(ViewGroup parent) {
-        return new MediaContentViewHolder(
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_media_content, parent, false));
+    public ImageView inflateViewStub(ViewStub viewStub) {
+        viewStub.setLayoutResource(R.layout.layout_sketch_view);
+        viewStub.setInflatedId(R.id.iv_img);
+        return (ImageView) viewStub.inflate();
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, FileBean item) {
-        MediaContentViewHolder holder = (MediaContentViewHolder) viewHolder;
-        Sketch.with(holder.mIvImg.getContext())
-                .display(item.getPath(), holder.mIvImg)
-                .maxSize((int) UIUtils.getDimen(R.dimen.x720) / 4, (int) UIUtils.getDimen(R.dimen.x720) / 4)
-                .resize((int) UIUtils.getDimen(R.dimen.x720) / 4, (int) UIUtils.getDimen(R.dimen.x720) / 4)
-                .cacheProcessedImageInDisk()
-                .loadingImage(R.drawable.img_loading)
-                .displayer(new TransitionImageDisplayer())
-                .thumbnailMode()
-                .commit();
-    }
-
-    public class MediaContentViewHolder extends RecyclerView.ViewHolder {
-        SketchImageView mIvImg;
-
-        MediaContentViewHolder(View itemView) {
-            super(itemView);
-            mIvImg = itemView.findViewById(R.id.iv_img);
-            ViewGroup.LayoutParams layoutParams = mIvImg.getLayoutParams();
-            if (null != layoutParams) {
-                layoutParams.width = (int) UIUtils.getDimen(R.dimen.x720) / 4;
-                layoutParams.height = (int) UIUtils.getDimen(R.dimen.x720) / 4;
-                mIvImg.setLayoutParams(layoutParams);
-            }
+    public void onBindViewHolder(MediaAdapter.MediaContentViewHolder viewHolder, FileBean item) {
+        SketchImageView ivImg = (SketchImageView) viewHolder.image;
+        switch (item.getMediaMimeType()) {
+            case MimeType.PHOTO:
+                Sketch.with(ivImg.getContext())
+                        .display(item.getPath(), ivImg)
+                        .maxSize(ivImg.getLayoutParams().width, ivImg.getLayoutParams().height)
+                        .resize(ivImg.getLayoutParams().width, ivImg.getLayoutParams().height)
+                        .cacheProcessedImageInDisk()
+                        .loadingImage(R.drawable.img_loading)
+                        .displayer(new TransitionImageDisplayer())
+                        .thumbnailMode()
+                        .commit();
+                break;
+            case MimeType.VIDEO:
+                Sketch.with(ivImg.getContext())
+                        .display(VideoThumbnailUriModel.makeUri(item.getPath()), ivImg)
+                        .maxSize(ivImg.getLayoutParams().width, ivImg.getLayoutParams().height)
+                        .resize(ivImg.getLayoutParams().width, ivImg.getLayoutParams().height)
+                        .cacheProcessedImageInDisk()
+                        .loadingImage(R.drawable.img_loading)
+                        .displayer(new TransitionImageDisplayer())
+                        .thumbnailMode()
+                        .commit();
+                break;
+            case MimeType.AUDIO:
+                Sketch.with(ivImg.getContext())
+                        .display(AudioThumbnailUriModel.makeUri(item.getPath()), ivImg)
+                        .maxSize(ivImg.getLayoutParams().width, ivImg.getLayoutParams().height)
+                        .resize(ivImg.getLayoutParams().width, ivImg.getLayoutParams().height)
+                        .cacheProcessedImageInDisk()
+                        .loadingImage(R.drawable.img_loading)
+                        .displayer(new TransitionImageDisplayer())
+                        .thumbnailMode()
+                        .commit();
+                break;
         }
     }
 }

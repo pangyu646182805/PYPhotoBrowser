@@ -6,7 +6,6 @@ package com.neurotech.photobrowser.bean;
 
 public class AudioBean extends FileBean {
     private int albumId;
-    private long duration;
 
     public int getAlbumId() {
         return albumId;
@@ -16,18 +15,9 @@ public class AudioBean extends FileBean {
         this.albumId = albumId;
     }
 
-    public long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
-    }
-
     @Override
     public String toString() {
         return super.toString() + "\n" +
-                "albumId --> " + albumId + "\n" +
-                "duration --> " + duration;
+                "albumId --> " + albumId;
     }
 }

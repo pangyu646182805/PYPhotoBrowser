@@ -3,14 +3,14 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/action_browser"
-        android:icon="@drawable/ic_eye"
+        android:id="@+id/action_preview"
         app:showAsAction="always"
-        android:title="浏览"/>
+        android:enabled="false"
+        android:title="预览"/>
 
     <item
         android:id="@+id/action_done"
-        android:icon="@drawable/ic_done"
         app:showAsAction="always"
+        android:enabled="false"
         android:title="完成"/>
 </menu>

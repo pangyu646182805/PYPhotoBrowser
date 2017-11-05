@@ -44,6 +44,7 @@ public class VideoLoader {
         videoBean.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Video.VideoColumns.DATA)));
         videoBean.setSize(cursor.getLong(cursor.getColumnIndex(MediaStore.Video.VideoColumns.SIZE)));
         videoBean.setMediaMimeType(MimeType.VIDEO);
+        videoBean.setDuration(cursor.getInt(cursor.getColumnIndex(MediaStore.Video.VideoColumns.DURATION)));
         videoBean.setMimeType(cursor.getString(cursor.getColumnIndex(MediaStore.Video.VideoColumns.MIME_TYPE)));
         videoBean.setWidth(cursor.getInt(cursor.getColumnIndex(MediaStore.Video.VideoColumns.WIDTH)));
         videoBean.setHeight(cursor.getInt(cursor.getColumnIndex(MediaStore.Video.VideoColumns.HEIGHT)));
@@ -67,6 +68,7 @@ public class VideoLoader {
                             MediaStore.Video.VideoColumns.DATE_TAKEN,
                             MediaStore.Video.VideoColumns.DATE_ADDED,
                             MediaStore.Video.VideoColumns.DATE_MODIFIED,
+                            MediaStore.Video.VideoColumns.DURATION,
                             MediaStore.Video.VideoColumns.SIZE,
                             MediaStore.Video.VideoColumns.MIME_TYPE,
                             MediaStore.Video.VideoColumns.WIDTH,

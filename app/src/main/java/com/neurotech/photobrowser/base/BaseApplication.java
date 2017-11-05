@@ -9,10 +9,14 @@ import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.DBCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.neurotech.photobrowser.AudioThumbnailUriModel;
+import com.neurotech.photobrowser.VideoThumbnailUriModel;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import me.xiaopan.sketch.Configuration;
+import me.xiaopan.sketch.Sketch;
 import okhttp3.OkHttpClient;
 
 /**
@@ -31,6 +35,10 @@ public class BaseApplication extends Application {
         super.onCreate();
         sContext = this;
         initOkGo();
+
+        Configuration configuration = Sketch.with(this).getConfiguration();
+        configuration.getUriModelRegistry().add(new VideoThumbnailUriModel());
+        configuration.getUriModelRegistry().add(new AudioThumbnailUriModel());
     }
 
     private void initOkGo() {
