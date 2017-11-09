@@ -10,6 +10,10 @@ import java.lang.annotation.RetentionPolicy;
  */
 
 public class MimeType {
+    /**
+     * 图片和视频
+     * MimeType为All的时候允许同时选择图片和视频
+     */
     public static final int ALL = 0;
     public static final int PHOTO = 2;
     public static final int VIDEO = 4;

@@ -1,17 +1,26 @@
 package com.neurotech.photobrowser.ui.activities;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.flyco.systembar.SystemBarHelper;
 import com.neurotech.photobrowser.MediaSelector;
+import com.neurotech.photobrowser.PhotoSelectorConfig;
 import com.neurotech.photobrowser.R;
 import com.neurotech.photobrowser.SketchViewHolderCreator;
 import com.neurotech.photobrowser.base.SupportActivity;
+import com.neurotech.photobrowser.bean.FileBean;
+import com.neurotech.photobrowser.utils.L;
 import com.neurotech.photobrowser.utils.MimeType;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -20,7 +29,9 @@ import butterknife.OnClick;
  * Created by NeuroAndroid on 2017/10/31.
  */
 
-public class EntranceActivity extends SupportActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class EntranceActivity extends SupportActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
+    private static final int REQUEST_CODE_CHOOSE = 11;
+
     @BindView(R.id.rg_type)
     RadioGroup mRgGroup;
     @BindView(R.id.rb_all)
@@ -46,6 +57,18 @@ public class EntranceActivity extends SupportActivity implements View.OnClickLis
     @BindView(R.id.btn_max_selectable_add)
     Button mBtnMaxSelectableAdd;
 
+    @BindView(R.id.cb_single_mode)
+    CheckBox mCbSingleMode;
+
+    @BindView(R.id.cb_show_gif)
+    CheckBox mCbShowGif;
+    @BindView(R.id.cb_show_gif_flag)
+    CheckBox mCbShowGifFlag;
+    @BindView(R.id.cb_show_header_item)
+    CheckBox mCbShowHeaderItem;
+    @BindView(R.id.cb_canceled_touch_outside)
+    CheckBox mCbCanceledOnTouchOutside;
+
     private int mChooseMode = MimeType.ALL;
 
     @Override
@@ -65,6 +88,9 @@ public class EntranceActivity extends SupportActivity implements View.OnClickLis
         mBtnSpanCountAdd.setOnClickListener(this);
         mBtnSpanCountCut.setOnClickListener(this);
         mRgGroup.setOnCheckedChangeListener(this);
+
+        mCbSingleMode.setOnCheckedChangeListener(this);
+        mCbShowGif.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -79,7 +105,7 @@ public class EntranceActivity extends SupportActivity implements View.OnClickLis
                 break;
             case R.id.btn_max_selectable_cut:
                 maxSelectable = getMaxSelectable();
-                if (maxSelectable > 2) {
+                if (maxSelectable > 1) {
                     mTvMaxSelectable.setText(String.valueOf(maxSelectable - 1));
                 }
                 break;
@@ -113,8 +139,14 @@ public class EntranceActivity extends SupportActivity implements View.OnClickLis
                 .choose(mChooseMode)
                 .maxSelectable(getMaxSelectable())
                 .gridSize(getSpanCount())
+                .showGif(mCbShowGif.isChecked())
+                .showGifFlag(mCbShowGifFlag.isChecked() && mCbShowGifFlag.isEnabled())
+                // .setGifFlagResId(R.drawable.ic_gif_custom)
+                .setBackgroundColor(Color.WHITE)
+                .showHeaderItem(mCbShowHeaderItem.isChecked())
+                .setCanceledOnTouchOutside(mCbCanceledOnTouchOutside.isChecked())
                 .customViewHolder(new SketchViewHolderCreator())
-                .forResult(0);
+                .forResult(REQUEST_CODE_CHOOSE);
     }
 
     @Override
@@ -132,6 +164,33 @@ public class EntranceActivity extends SupportActivity implements View.OnClickLis
             case R.id.rb_audio:
                 mChooseMode = MimeType.AUDIO;
                 break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+        switch (compoundButton.getId()) {
+            case R.id.cb_show_gif:
+                mCbShowGifFlag.setEnabled(isChecked);
+                break;
+            case R.id.cb_single_mode:
+                mBtnMaxSelectableCut.setEnabled(!isChecked);
+                mBtnMaxSelectableAdd.setEnabled(!isChecked);
+                mTvMaxSelectable.setText(isChecked ? "1" : mTvMaxSelectable.getText());
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK)
+            return;
+        if (requestCode == REQUEST_CODE_CHOOSE) {
+            ArrayList<FileBean> selectedItems = data.getParcelableArrayListExtra(PhotoSelectorConfig.EXTRA_RESULT_SELECTED_ITEMS);
+            for (FileBean item : selectedItems) {
+                L.e("selected item path : " + item.getPath());
+            }
         }
     }
 }

@@ -5,10 +5,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.ListPopupWindow;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.neurotech.photobrowser.adapter.FolderAdapter;
 import com.neurotech.photobrowser.bean.FolderBean;
+import com.neurotech.photobrowser.utils.L;
 import com.neurotech.photobrowser.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -23,6 +25,15 @@ public class MediaFolderSpinner {
     private ListPopupWindow mListPopupWindow;
     private TextView mSelectedTextView;
     private FolderAdapter mFolderAdapter;
+    private AdapterView.OnItemClickListener mOnItemClickListener;
+
+    public FolderAdapter getFolderAdapter() {
+        return mFolderAdapter;
+    }
+
+    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
 
     public MediaFolderSpinner(@NonNull Context context) {
         mListPopupWindow = new ListPopupWindow(context);
@@ -31,6 +42,20 @@ public class MediaFolderSpinner {
         mListPopupWindow.setContentWidth((int) (216 * density));
         mListPopupWindow.setHorizontalOffset((int) (16 * density));
         mListPopupWindow.setVerticalOffset((int) (-48 * density));
+
+        mListPopupWindow.setOnItemClickListener((adapterView, view, position, id) -> {
+            L.e("onItemClick position : " + position);
+            MediaFolderSpinner.this.onItemClick(position);
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClick(adapterView, view, position, id);
+            }
+        });
+    }
+
+    private void onItemClick(int position) {
+        mListPopupWindow.dismiss();
+        String folderName = mFolderAdapter.getItem(position).getFolderName();
+        mSelectedTextView.setText(folderName);
     }
 
     public void setAdapter(FolderAdapter folderAdapter) {
@@ -43,6 +68,7 @@ public class MediaFolderSpinner {
         mSelectedTextView = tv;
         mSelectedTextView.setVisibility(View.GONE);
         mSelectedTextView.setOnClickListener(view -> {
+            mFolderAdapter.setSelectedSize(DataTransferStation.getInstance().getSelectedItems().size());
             int itemHeight = UIUtils.getResources().getDimensionPixelSize(R.dimen.folder_item_height);
             mListPopupWindow.setHeight(
                     mFolderAdapter.getCount() > MAX_SHOWN_COUNT ? itemHeight * MAX_SHOWN_COUNT

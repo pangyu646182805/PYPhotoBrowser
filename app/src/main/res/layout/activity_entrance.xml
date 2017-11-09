@@ -111,5 +111,41 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:text="+"/>
+
+        <CheckBox
+            android:id="@+id/cb_single_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="单选"/>
     </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/cb_show_gif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="是否显示gif图片"/>
+
+    <CheckBox
+        android:id="@+id/cb_show_gif_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:enabled="false"
+        android:text="是否显示gif flag"/>
+
+    <CheckBox
+        android:id="@+id/cb_show_header_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="是否显示HeaderItem"/>
+
+    <CheckBox
+        android:id="@+id/cb_canceled_touch_outside"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="是否点击空白区域取消PhotoSelector"/>
 </LinearLayout>

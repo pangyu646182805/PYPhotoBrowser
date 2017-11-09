@@ -91,6 +91,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             /*return new MediaContentViewHolder(
                     LayoutInflater.from(parent.getContext()).inflate(R.layout.item_media_content, parent, false));*/
             View mediaContentView = LayoutInflater.from(mContext).inflate(R.layout.item_media_content, parent, false);
+            mediaContentView.setBackgroundColor(mOptions.backgroundColor);
             MediaContentViewHolder mediaContentViewHolder = new MediaContentViewHolder(mediaContentView);
             mediaContentView.setOnClickListener(view -> {
                 int position = mediaContentViewHolder.getLayoutPosition();
@@ -103,7 +104,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     private void performClick(RecyclerView.ViewHolder viewHolder, int layoutPosition) {
-        final FileBean item = mMediaList.get(layoutPosition - 1);
+        final FileBean item = getItem(layoutPosition);
         handleClickEvent(viewHolder, layoutPosition, item);
     }
 
@@ -117,7 +118,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             return;
         }
         if (mMaxSelectable > 1 && mSelectedBeans.size() >= mMaxSelectable && !item.isSelected()) {
-            Toast.makeText(mContext, "最多可以选择" + mMaxSelectable, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "最多可以选择" + mMaxSelectable + "个文件", Toast.LENGTH_SHORT).show();
             return;
         }
         boolean selected = !item.isSelected();
@@ -149,7 +150,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             MediaHeaderViewHolder mediaHeaderViewHolder = (MediaHeaderViewHolder) holder;
         } else {
             MediaContentViewHolder mediaContentViewHolder = (MediaContentViewHolder) holder;
-            FileBean fileBean = mMediaList.get(position - 1);
+            FileBean fileBean = getItem(position);
             if (null != fileBean) {
                 /*Sketch.with(mContext)
                         .display(fileBean.getPath(), mediaContentViewHolder.mIvImg)
@@ -168,6 +169,12 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 int mediaMimeType = fileBean.getMediaMimeType();
                 if (mediaMimeType == MimeType.PHOTO) {
                     mediaContentViewHolder.llBottom.setVisibility(View.GONE);
+                    if (mOptions.showGif && mOptions.showGifFlag && "image/gif".equals(fileBean.getMimeType())) {
+                        mediaContentViewHolder.ivGifFlag.setVisibility(View.VISIBLE);
+                        mediaContentViewHolder.ivGifFlag.setImageResource(mOptions.gifFlagResId);
+                    } else {
+                        mediaContentViewHolder.ivGifFlag.setVisibility(View.GONE);
+                    }
                 } else {
                     mediaContentViewHolder.llBottom.setVisibility(View.VISIBLE);
                     mediaContentViewHolder.tvDuration.setText(formatVideoDuration(fileBean.getDuration()));
@@ -183,21 +190,22 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     private FileBean getItem(int position) {
-        return mMediaList.get(position - 1);
+        if (mOptions.showHeaderItem) {
+            return mMediaList.get(position - 1);
+        } else {
+            return mMediaList.get(position);
+        }
     }
 
-    public ArrayList<FileBean> getImageList() {
-        if (mOptions.mimeType == MimeType.ALL) {
-            ArrayList<FileBean> imageList = new ArrayList<>();
-            for (FileBean fileBean : mMediaList) {
-                if (fileBean.getMediaMimeType() == MimeType.PHOTO) {
-                    imageList.add(fileBean);
-                }
-            }
-            return imageList;
-        } else {
-            return mMediaList;
+    /**
+     * 获取预览列表
+     */
+    public ArrayList<FileBean> getPreviewList() {
+        if (mOptions.mimeType == MimeType.AUDIO) {
+            // 音频不支持预览
+            return null;
         }
+        return mMediaList;
     }
 
     /**
@@ -205,7 +213,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
      */
     @SuppressLint("DefaultLocale")
     private String formatVideoDuration(long duration) {
-        int HOUR = 1000 * 60 *60;
+        int HOUR = 1000 * 60 * 60;
         int MINUTE = 1000 * 60;
         int SECOND = 1000;
 
@@ -218,7 +226,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         int second = remainTime / SECOND;
 
-        if(hour == 0) {
+        if (hour == 0) {
             return String.format("%02d:%02d", minute, second);
         } else {
             return String.format("%02d:%02d:%02d", hour, minute, second);
@@ -227,13 +235,21 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return 1 + mMediaList.size();
+        if (mOptions.showHeaderItem) {
+            return 1 + mMediaList.size();
+        } else {
+            return mMediaList.size();
+        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return VIEW_TYPE_MEDIA_HEADER;
+        if (mOptions.showHeaderItem) {
+            if (position == 0) {
+                return VIEW_TYPE_MEDIA_HEADER;
+            } else {
+                return VIEW_TYPE_MEDIA_CONTENT;
+            }
         } else {
             return VIEW_TYPE_MEDIA_CONTENT;
         }
@@ -256,6 +272,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public class MediaContentViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
         AppCompatImageView ivCheck;
+        AppCompatImageView ivGifFlag;
         LinearLayout llBottom;
         AppCompatImageView ivType;
         TextView tvDuration;
@@ -271,6 +288,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
 
             ivCheck = itemView.findViewById(R.id.iv_check);
+            ivGifFlag = itemView.findViewById(R.id.iv_gif_flag);
             llBottom = itemView.findViewById(R.id.ll_bottom);
             ivType = itemView.findViewById(R.id.iv_type);
             tvDuration = itemView.findViewById(R.id.tv_duration);

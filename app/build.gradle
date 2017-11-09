@@ -70,6 +70,7 @@ dependencies {
     }
     compile rootProject.ext.dependencies["gson"]
     compile rootProject.ext.dependencies["sketch"]
+    compile rootProject.ext.dependencies["sketch-gif"]
     compile rootProject.ext.dependencies["FlycoSystemBar_Lib"]
     compile rootProject.ext.dependencies["fragmentation-core"]
     compile rootProject.ext.dependencies["SmartRefreshLayout"]

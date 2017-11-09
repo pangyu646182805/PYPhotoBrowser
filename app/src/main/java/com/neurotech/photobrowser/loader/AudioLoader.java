@@ -7,7 +7,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.neurotech.photobrowser.bean.AudioBean;
+import com.neurotech.photobrowser.bean.FileBean;
 import com.neurotech.photobrowser.utils.MimeType;
 
 import java.util.ArrayList;
@@ -18,14 +18,14 @@ import java.util.ArrayList;
 
 public class AudioLoader {
     @NonNull
-    public static ArrayList<AudioBean> getAllAudios(@NonNull Context context) {
+    public static ArrayList<FileBean> getAllAudios(@NonNull Context context) {
         Cursor cursor = makePhotoCursor(context, null, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
         return getAudios(cursor);
     }
 
     @NonNull
-    private static ArrayList<AudioBean> getAudios(@Nullable final Cursor cursor) {
-        ArrayList<AudioBean> songs = new ArrayList<>();
+    private static ArrayList<FileBean> getAudios(@Nullable final Cursor cursor) {
+        ArrayList<FileBean> songs = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 songs.add(getAudioFromCursorImpl(cursor));
@@ -37,8 +37,8 @@ public class AudioLoader {
         return songs;
     }
 
-    private static AudioBean getAudioFromCursorImpl(Cursor cursor) {
-        AudioBean audioBean = new AudioBean();
+    private static FileBean getAudioFromCursorImpl(Cursor cursor) {
+        FileBean audioBean = new FileBean();
         audioBean.setId(cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)));
         audioBean.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.TITLE)));
         audioBean.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.DATA)));

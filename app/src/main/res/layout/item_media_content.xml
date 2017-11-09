@@ -33,6 +33,14 @@
             app:srcCompat="@drawable/ic_uncheck"/>
     </LinearLayout>
 
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_gif_flag"
+        android:layout_width="28dp"
+        android:layout_height="24dp"
+        android:layout_gravity="right|bottom"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_gif_flag"/>
+
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"

@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools">
+      xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_preview"
-        android:enabled="false"
-        android:title="预览"
+        android:id="@+id/action_check_box"
+        android:icon="@drawable/ic_uncheck"
+        android:title="选择"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_done"
-        android:enabled="false"
         android:title="完成"
         app:showAsAction="always"/>
 </menu>

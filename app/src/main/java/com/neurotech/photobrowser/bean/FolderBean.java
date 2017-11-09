@@ -1,6 +1,6 @@
 package com.neurotech.photobrowser.bean;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by NeuroAndroid on 2017/11/2.
@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FolderBean {
     private String folderName;
-    private List<FileBean> fileList;
+    private ArrayList<FileBean> fileList;
 
     public String getFolderName() {
         return folderName;
@@ -18,11 +18,11 @@ public class FolderBean {
         this.folderName = folderName;
     }
 
-    public List<FileBean> getFileList() {
+    public ArrayList<FileBean> getFileList() {
         return fileList;
     }
 
-    public void setFileList(List<FileBean> fileList) {
+    public void setFileList(ArrayList<FileBean> fileList) {
         this.fileList = fileList;
     }
 

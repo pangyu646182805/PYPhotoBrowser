@@ -7,7 +7,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.neurotech.photobrowser.bean.PhotoAndVideoBean;
+import com.neurotech.photobrowser.bean.FileBean;
 import com.neurotech.photobrowser.utils.MimeType;
 
 import java.util.ArrayList;
@@ -18,14 +18,14 @@ import java.util.ArrayList;
 
 public class VideoLoader {
     @NonNull
-    public static ArrayList<PhotoAndVideoBean> getAllVideos(@NonNull Context context) {
+    public static ArrayList<FileBean> getAllVideos(@NonNull Context context) {
         Cursor cursor = makePhotoCursor(context, null, null, MediaStore.Video.Media.DEFAULT_SORT_ORDER);
         return getVideos(cursor);
     }
 
     @NonNull
-    private static ArrayList<PhotoAndVideoBean> getVideos(@Nullable final Cursor cursor) {
-        ArrayList<PhotoAndVideoBean> songs = new ArrayList<>();
+    private static ArrayList<FileBean> getVideos(@Nullable final Cursor cursor) {
+        ArrayList<FileBean> songs = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 songs.add(getVideoFromCursorImpl(cursor));
@@ -37,8 +37,8 @@ public class VideoLoader {
         return songs;
     }
 
-    private static PhotoAndVideoBean getVideoFromCursorImpl(Cursor cursor) {
-        PhotoAndVideoBean videoBean = new PhotoAndVideoBean();
+    private static FileBean getVideoFromCursorImpl(Cursor cursor) {
+        FileBean videoBean = new FileBean();
         videoBean.setId(cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)));
         videoBean.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Video.VideoColumns.TITLE)));
         videoBean.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Video.VideoColumns.DATA)));

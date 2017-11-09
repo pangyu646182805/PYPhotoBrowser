@@ -1,5 +1,6 @@
 package com.neurotech.photobrowser.ui.activities.photo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -13,13 +14,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.flyco.systembar.SystemBarHelper;
+import com.neurotech.photobrowser.DataTransferStation;
 import com.neurotech.photobrowser.MediaFolderSpinner;
 import com.neurotech.photobrowser.MediaLoader;
 import com.neurotech.photobrowser.PhotoGallery;
+import com.neurotech.photobrowser.PhotoSelectorConfig;
 import com.neurotech.photobrowser.R;
 import com.neurotech.photobrowser.SelectionOptions;
 import com.neurotech.photobrowser.adapter.FolderAdapter;
@@ -28,18 +33,16 @@ import com.neurotech.photobrowser.bean.FileBean;
 import com.neurotech.photobrowser.bean.FolderBean;
 import com.neurotech.photobrowser.utils.L;
 import com.neurotech.photobrowser.utils.SpacesItemDecoration;
-import com.neurotech.photobrowser.utils.ToastUtils;
 import com.neurotech.photobrowser.utils.UIUtils;
 import com.neurotech.photobrowser.widget.slidingpanellayout.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by NeuroAndroid on 2017/10/30.
  */
 
-public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoader.MediaCallBack {
+public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoader.MediaCallBack, AdapterView.OnItemClickListener {
     private SelectionOptions mOptions;
     private final MediaLoader mMediaLoader = new MediaLoader();
 
@@ -53,7 +56,8 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
     private Toolbar mToolbar;
     private MediaAdapter mMediaAdapter;
     private MediaFolderSpinner mFolderSpinner;
-    private List<FileBean> mSelectedItems = new ArrayList<>();
+    private DataTransferStation mDataTransferStation;
+    // private List<FileBean> mSelectedItems = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +68,7 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
         initView(savedInstanceState);
         initListener();
 
+        mDataTransferStation = DataTransferStation.getInstance();
         mMediaLoader.onCreate(this, this);
         mMediaLoader.loadMedia();
     }
@@ -105,6 +110,7 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
         mFolderSpinner.setAdapter(new FolderAdapter(this, null));
         mFolderSpinner.setSelectedTextView(findViewById(R.id.tv_selected_folder));
         mFolderSpinner.setPopupAnchorView(mToolbar);
+        mFolderSpinner.setOnItemClickListener(this);
 
         // mRvList.setLayoutFrozen(true);
         mRvList.setHasFixedSize(true);
@@ -130,10 +136,10 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
     }
 
     private void initListener() {
-        mSlidingUpPanelLayout.setFadeOnClickListener(view -> {
-            ToastUtils.info("click fade area");
-            mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        });
+        if (mOptions.canceledOnTouchOutside) {
+            mSlidingUpPanelLayout.setFadeOnClickListener(view ->
+                    mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED));
+        }
         mSlidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.SimplePanelSlideListener() {
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
@@ -159,25 +165,40 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
             }
         });
         mMediaAdapter.setOnItemSelectedListener((viewHolder, position, isSelected, item) -> {
-            if (isSelected) {
-                mSelectedItems.add(item);
-                if (mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED) {
-                    mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                }
-            } else {
-                mSelectedItems.remove(item);
+            onItemSelected(isSelected, item);
+        });
+        mMediaAdapter.setOnItemClickListener((viewHolder, position, fileBean) ->
+                preview(mOptions.showHeaderItem ? position - 1 : position));
+    }
+
+    /**
+     * 预览图片或者视频
+     *
+     * @param position 等于-1则是预览选择的item
+     */
+    private void preview(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        PhotoGallery.openPhotoGallery(this, bundle);
+    }
+
+    /**
+     * item选中/反选
+     *
+     * @param isSelected 是否被勾选
+     * @param item       item实体类
+     */
+    private void onItemSelected(boolean isSelected, FileBean item) {
+        if (isSelected) {
+            mDataTransferStation.putSelectedItem(item);
+            if (mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED) {
+                mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
-            invalidateOptionsMenu();
-            mSlidingUpPanelLayout.setTouchEnabled(mSelectedItems.isEmpty());
-        });
-        mMediaAdapter.setOnItemClickListener((viewHolder, position, fileBean) -> {
-            L.e("position : " + position + " title : " + fileBean.getTitle());
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("item", fileBean);
-            bundle.putSerializable("images", mMediaAdapter.getImageList());
-            bundle.putInt("position", position);
-            PhotoGallery.openPhotoGallery(this, bundle);
-        });
+        } else {
+            mDataTransferStation.removeFromSelectedItems(item);
+        }
+        invalidateOptionsMenu();
+        mSlidingUpPanelLayout.setTouchEnabled(mDataTransferStation.getSelectedItems().isEmpty());
     }
 
     private void showAppBarLayout() {
@@ -192,7 +213,7 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
         ViewCompat.animate(mAppBarLayout)
                 .translationY(-mAppBarLayout.getHeight())
                 .setDuration(200)
-                .setInterpolator(new DecelerateInterpolator())
+                .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
     }
 
@@ -200,6 +221,37 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
     protected void onPause() {
         overridePendingTransition(0, 0);
         super.onPause();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK)
+            return;
+
+        if (requestCode == PhotoSelectorConfig.REQUEST_CODE_PREVIEW) {
+            if (data != null) {
+                ArrayList<FileBean> selectedItems = mDataTransferStation.getSelectedItems();
+                if (data.getBooleanExtra(PhotoSelectorConfig.EXTRA_RESULT_APPLY, false)) {
+                    // 发送出去
+                    onResult(selectedItems);
+                } else {
+                    mMediaAdapter.notifyDataSetChanged();
+                    if (mSlidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.ANCHORED) {
+                        mSlidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                    }
+                    invalidateOptionsMenu();
+                    mSlidingUpPanelLayout.setTouchEnabled(mDataTransferStation.getSelectedItems().isEmpty());
+                }
+            }
+        }
+    }
+
+    private void onResult(ArrayList<FileBean> selectedItems) {
+        Intent result = new Intent();
+        result.putParcelableArrayListExtra(PhotoSelectorConfig.EXTRA_RESULT_SELECTED_ITEMS, selectedItems);
+        setResult(RESULT_OK, result);
+        onBackPressed();
     }
 
     @Override
@@ -219,6 +271,8 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
 
     @Override
     public void onLoadFinished(ArrayList<FileBean> mediaList, ArrayList<FolderBean> folderList) {
+        // 将数据存入临时的数据存储点
+        mDataTransferStation.putItems(mediaList);
         mMediaAdapter.setMediaList(mediaList);
         mFolderSpinner.swapFolderList(folderList);
     }
@@ -232,14 +286,15 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem previewItem = menu.findItem(R.id.action_preview);
         MenuItem doneItem = menu.findItem(R.id.action_done);
-        if (mSelectedItems.isEmpty()) {
+        ArrayList<FileBean> selectedImages = mDataTransferStation.getSelectedItems();
+        if (selectedImages.isEmpty()) {
             previewItem.setEnabled(false);
             doneItem.setEnabled(false);
-            doneItem.setTitle("完成");
+            doneItem.setTitle("完成(0/" + mOptions.maxSelectable + ")");
         } else {
             previewItem.setEnabled(true);
             doneItem.setEnabled(true);
-            doneItem.setTitle("完成(" + mSelectedItems.size() + "/" + mOptions.maxSelectable +")");
+            doneItem.setTitle("完成(" + selectedImages.size() + "/" + mOptions.maxSelectable + ")");
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -256,6 +311,12 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
             case android.R.id.home:
                 onBackPressed();
                 break;
+            case R.id.action_preview:
+                preview(-1);
+                break;
+            case R.id.action_done:
+                onResult(mDataTransferStation.getSelectedItems());
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -263,6 +324,25 @@ public class PhotoSelectorActivity extends AppCompatActivity implements MediaLoa
     @Override
     protected void onDestroy() {
         mMediaLoader.onDestroy();
+        if (mDataTransferStation != null) {
+            mDataTransferStation.onDestroy();
+            mDataTransferStation = null;
+        }
         super.onDestroy();
+    }
+
+    /**
+     * MediaFolderSpinner的item点击事件回调
+     */
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        FolderAdapter folderAdapter = mFolderSpinner.getFolderAdapter();
+        if (null != folderAdapter) {
+            FolderBean folderBean = folderAdapter.getItem(position);
+            ArrayList<FileBean> fileList = folderBean.getFileList();
+            if (null != fileList) {
+                mMediaAdapter.setMediaList(fileList);
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.neurotech.photobrowser.bean.PhotoAndVideoBean;
+import com.neurotech.photobrowser.bean.FileBean;
 import com.neurotech.photobrowser.utils.MimeType;
 
 import java.util.ArrayList;
@@ -18,23 +18,32 @@ import java.util.ArrayList;
 
 public class PhotoLoader {
     @NonNull
-    public static ArrayList<PhotoAndVideoBean> getAllPhotos(@NonNull Context context) {
-        String selection = MediaStore.Images.Media.MIME_TYPE + "=? or " +
-                MediaStore.Images.Media.MIME_TYPE + "=? or " +
-                MediaStore.Images.Media.MIME_TYPE + "=? or " +
-                MediaStore.Images.Media.MIME_TYPE + "=? or " +
-                MediaStore.Images.Media.MIME_TYPE + "=? or " +
-                MediaStore.Images.Media.MIME_TYPE + "=?";
-        String[] selectionValues = new String[]{
-                "image/jpeg", "image/png", "image/jpg", "image/gif",
-                "image/x-ms-bmp", "image/webp"};
-        Cursor cursor = makePhotoCursor(context, selection, selectionValues, MediaStore.Images.Media.DEFAULT_SORT_ORDER);
+    public static ArrayList<FileBean> getAllPhotos(@NonNull Context context, boolean showGif) {
+        StringBuilder selection = new StringBuilder();
+        selection.append(MediaStore.Images.Media.MIME_TYPE).append("=? or ")
+                .append(MediaStore.Images.Media.MIME_TYPE).append("=? or ")
+                .append(MediaStore.Images.Media.MIME_TYPE).append("=? or ")
+                .append(MediaStore.Images.Media.MIME_TYPE).append("=? or ")
+                .append(MediaStore.Images.Media.MIME_TYPE);
+        String[] selectionValues;
+        if (showGif) {
+            selection.append("=? or ").append(MediaStore.Images.Media.MIME_TYPE).append("=?");
+            selectionValues = new String[]{
+                    "image/jpeg", "image/png", "image/jpg", "image/gif",
+                    "image/x-ms-bmp", "image/webp"};
+        } else {
+            selection.append("=?");
+            selectionValues = new String[]{
+                    "image/jpeg", "image/png", "image/jpg",
+                    "image/x-ms-bmp", "image/webp"};
+        }
+        Cursor cursor = makePhotoCursor(context, selection.toString(), selectionValues, MediaStore.Images.Media.DEFAULT_SORT_ORDER);
         return getPhotos(cursor);
     }
 
     @NonNull
-    private static ArrayList<PhotoAndVideoBean> getPhotos(@Nullable final Cursor cursor) {
-        ArrayList<PhotoAndVideoBean> songs = new ArrayList<>();
+    private static ArrayList<FileBean> getPhotos(@Nullable final Cursor cursor) {
+        ArrayList<FileBean> songs = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 songs.add(getPhotoFromCursorImpl(cursor));
@@ -46,8 +55,8 @@ public class PhotoLoader {
         return songs;
     }
 
-    private static PhotoAndVideoBean getPhotoFromCursorImpl(Cursor cursor) {
-        PhotoAndVideoBean photoBean = new PhotoAndVideoBean();
+    private static FileBean getPhotoFromCursorImpl(Cursor cursor) {
+        FileBean photoBean = new FileBean();
         photoBean.setId(cursor.getInt(cursor.getColumnIndex(BaseColumns._ID)));
         photoBean.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.TITLE)));
         photoBean.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)));

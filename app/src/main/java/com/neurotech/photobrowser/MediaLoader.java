@@ -20,7 +20,6 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -67,8 +66,8 @@ public class MediaLoader implements LoaderManager.LoaderCallbacks<ArrayList<File
         }
 
         long start = System.currentTimeMillis();
-        List<FileBean> fileList;
-        Map<String, List<FileBean>> map = new TreeMap<>();
+        ArrayList<FileBean> fileList;
+        Map<String, ArrayList<FileBean>> map = new TreeMap<>();
         for (FileBean fileBean : mediaList) {
             String folderName = new File(fileBean.getPath()).getParentFile().getName();
             if (!map.containsKey(folderName)) {
@@ -87,7 +86,7 @@ public class MediaLoader implements LoaderManager.LoaderCallbacks<ArrayList<File
 
         ArrayList<FolderBean> folderList = new ArrayList<>();
         folderList.add(folderBean);
-        for (Map.Entry<String, List<FileBean>> entry : map.entrySet()) {
+        for (Map.Entry<String, ArrayList<FileBean>> entry : map.entrySet()) {
             folderBean = new FolderBean();
             folderBean.setFolderName(entry.getKey());
             folderBean.setFileList(entry.getValue());
@@ -124,9 +123,10 @@ public class MediaLoader implements LoaderManager.LoaderCallbacks<ArrayList<File
         public ArrayList<FileBean> loadInBackground() {
             long start = System.currentTimeMillis();
             ArrayList<FileBean> mediaList = new ArrayList<>();
+            boolean showGif = SelectionOptions.getOptions().showGif;
             switch (SelectionOptions.getOptions().mimeType) {
                 case MimeType.PHOTO:
-                    mediaList.addAll(PhotoLoader.getAllPhotos(getContext()));
+                    mediaList.addAll(PhotoLoader.getAllPhotos(getContext(), showGif));
                     break;
                 case MimeType.VIDEO:
                     mediaList.addAll(VideoLoader.getAllVideos(getContext()));
@@ -135,9 +135,8 @@ public class MediaLoader implements LoaderManager.LoaderCallbacks<ArrayList<File
                     mediaList.addAll(AudioLoader.getAllAudios(getContext()));
                     break;
                 case MimeType.ALL:
-                    mediaList.addAll(PhotoLoader.getAllPhotos(getContext()));
+                    mediaList.addAll(PhotoLoader.getAllPhotos(getContext(), showGif));
                     mediaList.addAll(VideoLoader.getAllVideos(getContext()));
-                    mediaList.addAll(AudioLoader.getAllAudios(getContext()));
                     break;
             }
             Collections.sort(mediaList, new AlbumComparator());

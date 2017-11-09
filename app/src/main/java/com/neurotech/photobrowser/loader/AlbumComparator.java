@@ -1,7 +1,6 @@
 package com.neurotech.photobrowser.loader;
 
 import com.neurotech.photobrowser.bean.FileBean;
-import com.neurotech.photobrowser.bean.PhotoAndVideoBean;
 
 import java.util.Comparator;
 
@@ -25,10 +24,6 @@ public class AlbumComparator implements Comparator<FileBean> {
     }
 
     private long getTime(FileBean fileBean) {
-        if (fileBean instanceof PhotoAndVideoBean) {
-            return ((PhotoAndVideoBean) fileBean).getDateTaken();
-        } else {
-            return fileBean.getDateModified();
-        }
+        return fileBean.getDateTaken() != null ? fileBean.getDateTaken() : fileBean.getDateModified();
     }
 }

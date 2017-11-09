@@ -1,5 +1,7 @@
 package com.neurotech.photobrowser.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.format.Formatter;
 
 import com.neurotech.photobrowser.utils.MimeType;
@@ -12,7 +14,7 @@ import java.io.Serializable;
  * Created by NeuroAndroid on 2017/11/1.
  */
 
-public class FileBean implements Serializable {
+public class FileBean implements Parcelable {
     private int id = -1;
     private String title;  // 文件名称
     private String path;  // 文件路径
@@ -24,6 +26,10 @@ public class FileBean implements Serializable {
     private String mimeType;  // mime类型 image/jpeg
     private boolean isSelected;
     private int duration;
+    private int albumId;
+    private Long dateTaken;  // 文件添加时间
+    private int width;  // 尺寸信息
+    private int height;  // 尺寸信息
 
     public int getDuration() {
         return duration;
@@ -105,6 +111,38 @@ public class FileBean implements Serializable {
         isSelected = selected;
     }
 
+    public int getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(int albumId) {
+        this.albumId = albumId;
+    }
+
+    public Long getDateTaken() {
+        return dateTaken;
+    }
+
+    public void setDateTaken(Long dateTaken) {
+        this.dateTaken = dateTaken;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     @Override
     public String toString() {
         return "id --> " + id + "\n" +
@@ -130,4 +168,59 @@ public class FileBean implements Serializable {
                 dateAdded == albumBean.dateAdded &&
                 dateModified == albumBean.dateModified;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.path);
+        dest.writeLong(this.size);
+        dest.writeLong(this.dateAdded);
+        dest.writeLong(this.dateModified);
+        dest.writeInt(this.mediaMimeType);
+        dest.writeString(this.mimeType);
+        dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.duration);
+        dest.writeInt(this.albumId);
+        dest.writeValue(this.dateTaken);
+        dest.writeInt(this.width);
+        dest.writeInt(this.height);
+    }
+
+    public FileBean() {
+    }
+
+    protected FileBean(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.path = in.readString();
+        this.size = in.readLong();
+        this.dateAdded = in.readLong();
+        this.dateModified = in.readLong();
+        this.mediaMimeType = in.readInt();
+        this.mimeType = in.readString();
+        this.isSelected = in.readByte() != 0;
+        this.duration = in.readInt();
+        this.albumId = in.readInt();
+        this.dateTaken = (Long) in.readValue(Long.class.getClassLoader());
+        this.width = in.readInt();
+        this.height = in.readInt();
+    }
+
+    public static final Creator<FileBean> CREATOR = new Creator<FileBean>() {
+        @Override
+        public FileBean createFromParcel(Parcel source) {
+            return new FileBean(source);
+        }
+
+        @Override
+        public FileBean[] newArray(int size) {
+            return new FileBean[size];
+        }
+    };
 }

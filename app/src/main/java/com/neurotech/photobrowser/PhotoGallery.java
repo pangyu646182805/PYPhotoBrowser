@@ -1,6 +1,6 @@
 package com.neurotech.photobrowser;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,11 +10,11 @@ import android.support.annotation.NonNull;
  */
 
 public class PhotoGallery {
-    public static void openPhotoGallery(@NonNull Context context, Bundle bundle) {
-        Intent intent = new Intent(context, PhotoGalleryActivity.class);
+    public static void openPhotoGallery(@NonNull Activity activity, Bundle bundle) {
+        Intent intent = new Intent(activity, PhotoGalleryActivity.class);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
-        context.startActivity(intent);
+        activity.startActivityForResult(intent, PhotoSelectorConfig.REQUEST_CODE_PREVIEW);
     }
 }
