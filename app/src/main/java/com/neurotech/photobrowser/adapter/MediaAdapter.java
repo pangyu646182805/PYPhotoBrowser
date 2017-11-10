@@ -39,7 +39,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     /**
      * 之前选中的位置
      */
-    private int mPrePos = 1;
+    private int mPrePos;
 
     private OnItemSelectedListener mOnItemSelectedListener;
     private OnItemClickListener mOnItemClickListener;
@@ -66,6 +66,7 @@ public class MediaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mMaxSelectable = mOptions.maxSelectable;
 
         mImageResize = mContext.getResources().getDisplayMetrics().widthPixels / mOptions.gridSize;
+        if (mOptions.showHeaderItem) mPrePos = 1;
     }
 
     /**
